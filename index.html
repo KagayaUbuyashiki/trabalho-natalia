@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfólio de Matheus Sá De Araujo Miranda, desenvolvedor full stack em formação: habilidades, projetos e contato.">
+  <meta name="theme-color" content="#0d1117">
+  <title>Matheus Sá | Desenvolvedor Full Stack</title>
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topo">
+    <nav class="nav container" aria-label="Navegação principal">
+      <a class="nav__marca" href="#inicio">Matheus<span>.</span></a>
+      <ul class="nav__links">
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#habilidades">Habilidades</a></li>
+        <li><a href="#projetos">Projetos</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero container" id="inicio">
+      <div class="hero__texto">
+        <p class="hero__saudacao">Olá, eu sou</p>
+        <h1 class="hero__nome">Matheus Sá De Araujo Miranda</h1>
+        <p class="hero__cargo">Desenvolvedor Full Stack em formação</p>
+        <p class="hero__resumo">
+          Crio aplicações web completas com TypeScript, React, Next.js e Node.js,
+          indo do banco de dados à interface, com testes automatizados e entrega contínua.
+        </p>
+        <div class="hero__acoes">
+          <a class="botao botao--principal" href="#projetos">Ver projetos</a>
+          <a class="botao botao--secundario" href="#contato">Entrar em contato</a>
+        </div>
+      </div>
+      <img class="hero__avatar" src="images/avatar.svg" alt="Monograma MS de Matheus Sá" width="280" height="280">
+    </section>
+
+    <section class="secao container" id="sobre">
+      <h2 class="secao__titulo">Sobre mim</h2>
+      <div class="sobre">
+        <p>
+          Sou estudante de tecnologia no SENAI, em Minas Gerais, e gosto de transformar ideias em
+          sistemas que funcionam de verdade. Desenvolvo APIs REST com Express e NestJS, modelo bancos
+          relacionais em MySQL e PostgreSQL e construo interfaces responsivas com React e Next.js.
+        </p>
+        <p>
+          Já publiquei projetos na Vercel, integrei serviços como Supabase e Discord e escrevo testes
+          com Vitest e Jest para manter as regras de negócio confiáveis. Hoje também cuido da esteira
+          de entrega dos meus projetos com GitHub Actions, validando o código a cada Pull Request e
+          publicando automaticamente.
+        </p>
+      </div>
+    </section>
+
+    <section class="secao container" id="habilidades">
+      <h2 class="secao__titulo">Habilidades técnicas</h2>
+      <div class="habilidades">
+        <article class="habilidade">
+          <h3>Front-end</h3>
+          <ul class="tags">
+            <li>HTML5</li>
+            <li>CSS3</li>
+            <li>JavaScript</li>
+            <li>TypeScript</li>
+            <li>React</li>
+            <li>Next.js</li>
+            <li>Vite</li>
+            <li>Tailwind CSS</li>
+            <li>Zustand</li>
+            <li>Three.js</li>
+          </ul>
+        </article>
+        <article class="habilidade">
+          <h3>Back-end</h3>
+          <ul class="tags">
+            <li>Node.js</li>
+            <li>Express</li>
+            <li>NestJS</li>
+            <li>APIs REST</li>
+            <li>Autenticação JWT</li>
+            <li>Zod</li>
+            <li>Webhooks</li>
+            <li>discord.js</li>
+          </ul>
+        </article>
+        <article class="habilidade">
+          <h3>Banco de dados</h3>
+          <ul class="tags">
+            <li>MySQL</li>
+            <li>PostgreSQL</li>
+            <li>Supabase</li>
+            <li>Prisma</li>
+            <li>Knex</li>
+            <li>Row Level Security</li>
+          </ul>
+        </article>
+        <article class="habilidade">
+          <h3>Qualidade e DevOps</h3>
+          <ul class="tags">
+            <li>Git</li>
+            <li>GitHub</li>
+            <li>GitHub Actions</li>
+            <li>GitHub Pages</li>
+            <li>Vercel</li>
+            <li>Docker Compose</li>
+            <li>Vitest</li>
+            <li>Jest</li>
+            <li>Supertest</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="secao container" id="projetos">
+      <h2 class="secao__titulo">Projetos</h2>
+      <div class="projetos">
+        <article class="projeto">
+          <img class="projeto__imagem" src="images/projetos/taberna.svg" alt="Ilustração do projeto Taberna do Espectro" width="640" height="360" loading="lazy">
+          <div class="projeto__corpo">
+            <h3>Taberna do Espectro</h3>
+            <p>
+              Mesa virtual de RPG para Star Wars RPG Edição Saga: criação de personagem, fichas
+              interativas, mesa de combate, mapas e narração, com um motor de regras coberto por testes.
+            </p>
+            <ul class="tags tags--pequenas">
+              <li>React 19</li>
+              <li>TypeScript</li>
+              <li>Vite</li>
+              <li>Tailwind CSS</li>
+              <li>Zustand</li>
+              <li>Supabase</li>
+              <li>Vitest</li>
+            </ul>
+            <div class="projeto__links">
+              <a href="https://taberna-do-espectro.vercel.app" target="_blank" rel="noopener noreferrer">Ver site</a>
+              <a href="https://github.com/KagayaUbuyashiki/Taberna-do-Espectro" target="_blank" rel="noopener noreferrer">Código</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="projeto">
+          <img class="projeto__imagem" src="images/projetos/plataforma.svg" alt="Ilustração do projeto Plataforma de Apoio" width="640" height="360" loading="lazy">
+          <div class="projeto__corpo">
+            <h3>Plataforma de Apoio · Meu Primeiro Site</h3>
+            <p>
+              Plataforma para alunos e voluntários do programa Meu Primeiro Site no Rio Pomba Valley:
+              aulas, galeria de sites, guia dos 17 ODS, editor de código com prévia ao vivo, avaliação
+              anônima das aulas e painel administrativo.
+            </p>
+            <ul class="tags tags--pequenas">
+              <li>Next.js</li>
+              <li>TypeScript</li>
+              <li>Supabase</li>
+              <li>Monaco Editor</li>
+              <li>Tailwind CSS</li>
+              <li>Zod</li>
+            </ul>
+            <div class="projeto__links">
+              <a href="https://plataforma-de-apoio.vercel.app" target="_blank" rel="noopener noreferrer">Ver site</a>
+              <a href="https://github.com/KagayaUbuyashiki/plataforma-de-apoio" target="_blank" rel="noopener noreferrer">Código</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="projeto">
+          <img class="projeto__imagem" src="images/projetos/comandas.svg" alt="Ilustração do projeto Bar Yasmim, controle de comandas" width="640" height="360" loading="lazy">
+          <div class="projeto__corpo">
+            <h3>Bar Yasmim · Controle de Comandas</h3>
+            <p>
+              Sistema de comandas para bar: a equipe autenticada controla mesas, itens e pagamentos, e o
+              cliente acompanha a própria comanda por QR Code, sem login, podendo chamar o garçom ou
+              pedir a conta.
+            </p>
+            <ul class="tags tags--pequenas">
+              <li>Next.js</li>
+              <li>TypeScript</li>
+              <li>Supabase</li>
+              <li>Realtime</li>
+              <li>Tailwind CSS</li>
+              <li>Recharts</li>
+            </ul>
+            <div class="projeto__links">
+              <a href="https://github.com/KagayaUbuyashiki/marquezine-bar" target="_blank" rel="noopener noreferrer">Código</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="projeto">
+          <img class="projeto__imagem" src="images/projetos/chamados.svg" alt="Ilustração do projeto Sistema de Chamados" width="640" height="360" loading="lazy">
+          <div class="projeto__corpo">
+            <h3>Sistema de Chamados</h3>
+            <p>
+              API REST de chamados de suporte: cadastro de pessoas e tipos de problema, abertura de
+              chamados com filtros por situação e prioridade, atribuição de técnico e comentários.
+            </p>
+            <ul class="tags tags--pequenas">
+              <li>NestJS</li>
+              <li>Prisma</li>
+              <li>MySQL</li>
+              <li>Docker Compose</li>
+              <li>Vitest</li>
+              <li>Supertest</li>
+            </ul>
+            <div class="projeto__links">
+              <a href="https://github.com/KagayaUbuyashiki/Sistemas-chamados-rpv" target="_blank" rel="noopener noreferrer">Código</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="projeto">
+          <img class="projeto__imagem" src="images/projetos/bot.svg" alt="Ilustração do projeto Free Stalkers Bot" width="640" height="360" loading="lazy">
+          <div class="projeto__corpo">
+            <h3>Free Stalkers Bot</h3>
+            <p>
+              Bot de Discord que funciona como sistema de tickets para relatórios de missão: cria um
+              canal privado, conduz o relato passo a passo e envia o resumo por webhook autenticado.
+            </p>
+            <ul class="tags tags--pequenas">
+              <li>Node.js</li>
+              <li>TypeScript</li>
+              <li>discord.js</li>
+              <li>Express</li>
+              <li>Webhooks</li>
+            </ul>
+            <div class="projeto__links">
+              <a href="https://github.com/KagayaUbuyashiki/bot-discord" target="_blank" rel="noopener noreferrer">Código</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="projeto">
+          <img class="projeto__imagem" src="images/projetos/esteira.svg" alt="Ilustração da esteira de CI/CD deste portfólio" width="640" height="360" loading="lazy">
+          <div class="projeto__corpo">
+            <h3>Portfólio com Esteira CI/CD</h3>
+            <p>
+              Este site: cada Pull Request passa por linter de HTML em Node 18 e 20, limite de tamanho de
+              arquivos, varredura de termos proibidos e checagem de links e imagens antes do deploy
+              automático no GitHub Pages.
+            </p>
+            <ul class="tags tags--pequenas">
+              <li>HTML5</li>
+              <li>CSS3</li>
+              <li>GitHub Actions</li>
+              <li>GitHub Pages</li>
+              <li>HTMLHint</li>
+            </ul>
+            <div class="projeto__links">
+              <a href="https://github.com/KagayaUbuyashiki/trabalho-natalia" target="_blank" rel="noopener noreferrer">Código</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="secao container" id="contato">
+      <div class="contato">
+        <h2 class="secao__titulo">Vamos conversar?</h2>
+        <p>Quer falar sobre um projeto ou uma oportunidade? Me chama no WhatsApp.</p>
+        <a class="botao botao--whatsapp" href="https://wa.me/5532999597280" target="_blank" rel="noopener noreferrer">
+          <img src="images/whatsapp.svg" alt="" width="22" height="22">
+          (32) 99959-7280
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <p class="container">© 2026 Matheus Sá De Araujo Miranda · Publicado automaticamente com GitHub Actions e GitHub Pages</p>
+  </footer>
+</body>
+</html>
