@@ -1,0 +1,87 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Publicar no GitHub Pages
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v7
+
+      - name: Verificar se o index.html existe na raiz
+        run: |
+          if [ ! -f index.html ]; then
+            echo "::error file=index.html::Arquivo index.html não encontrado na raiz do projeto. Deploy cancelado."
+            exit 1
+          fi
+
+      - name: Separar os arquivos aprovados do site
+        run: |
+          mkdir -p _site
+          cp index.html style.css _site/
+          cp -r images _site/
+          find _site -type f
+
+      - name: Configurar o GitHub Pages
+        uses: actions/configure-pages@v6
+
+      - name: Enviar os arquivos para o GitHub Pages
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+
+      - name: Publicar o site
+        id: deployment
+        uses: actions/deploy-pages@v5
+
+  notificar:
+    name: Notificar resultado do deploy
+    needs: deploy
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enviar notificação para o Discord
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          RESULTADO: ${{ needs.deploy.result }}
+          SITE_URL: ${{ needs.deploy.outputs.page_url }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          AUTOR: ${{ github.actor }}
+          COMMIT: ${{ github.sha }}
+        run: |
+          if [ "$RESULTADO" = "success" ]; then
+            MENSAGEM="✅ Deploy concluído com sucesso!
+          Site no ar: ${SITE_URL}
+          Commit ${COMMIT:0:7} por ${AUTOR}"
+          else
+            MENSAGEM="❌ O deploy do portfólio FALHOU (resultado: ${RESULTADO}).
+          Commit ${COMMIT:0:7} por ${AUTOR}
+          Detalhes: ${RUN_URL}"
+          fi
+          echo "$MENSAGEM"
+          if [ -z "$DISCORD_WEBHOOK_URL" ]; then
+            echo "::warning::Secret DISCORD_WEBHOOK_URL não configurado. Notificação do Discord não enviada."
+            exit 0
+          fi
+          jq -n --arg content "$MENSAGEM" '{username: "Esteira CI/CD", content: $content}' \
+            | curl --fail --silent --show-error -H "Content-Type: application/json" -d @- "$DISCORD_WEBHOOK_URL"
+          echo "Notificação enviada para o Discord."

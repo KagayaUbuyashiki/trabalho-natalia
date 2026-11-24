@@ -1,0 +1,130 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+env:
+  ARQUIVOS_DO_SITE: index.html style.css images
+
+jobs:
+  verificar-index:
+    name: Verificar index.html
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v7
+
+      - name: Verificar se o index.html existe na raiz
+        run: |
+          if [ ! -f index.html ]; then
+            echo "::error file=index.html::Arquivo index.html não encontrado na raiz do projeto. O GitHub Pages precisa dele para publicar o site."
+            exit 1
+          fi
+          echo "index.html encontrado na raiz do projeto."
+
+  linter:
+    name: Linter HTML (Node ${{ matrix.node-version }})
+    needs: verificar-index
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [18, 20]
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v7
+
+      - name: Preparar o Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - name: Instalar as dependências
+        run: npm ci
+
+      - name: Executar o linter (HTMLHint)
+        run: npm run lint
+
+  validacoes:
+    name: Validações de produção
+    needs: verificar-index
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v7
+
+      - name: Bloquear arquivos maiores que 500KB
+        run: |
+          GRANDES=$(find . -type f -size +500k -not -path './.git/*' -not -path './node_modules/*')
+          if [ -n "$GRANDES" ]; then
+            echo "Arquivos acima de 500KB encontrados:"
+            while IFS= read -r arquivo; do
+              echo "::error file=${arquivo#./}::Arquivo com $(du -h "$arquivo" | cut -f1) excede o limite de 500KB"
+            done <<< "$GRANDES"
+            exit 1
+          fi
+          echo "Nenhum arquivo acima de 500KB."
+
+      - name: Varredura de comentários e termos sensíveis
+        run: |
+          FALHOU=0
+          if grep -rnE 'TODO|FIXME' $ARQUIVOS_DO_SITE; then
+            echo "::error::Comentários TODO/FIXME encontrados nos arquivos do site."
+            FALHOU=1
+          fi
+          if grep -rniE 'senha|password' $ARQUIVOS_DO_SITE; then
+            echo "::error::Termos sensíveis (senha/password) encontrados nos arquivos do site."
+            FALHOU=1
+          fi
+          if grep -rnF '<!--' $ARQUIVOS_DO_SITE; then
+            echo "::error::Comentários HTML esquecidos nos arquivos do site."
+            FALHOU=1
+          fi
+          if grep -nF '/*' style.css; then
+            echo "::error::Comentários CSS esquecidos no style.css."
+            FALHOU=1
+          fi
+          if [ "$FALHOU" -ne 0 ]; then
+            exit 1
+          fi
+          echo "Nenhum comentário pendente ou termo sensível encontrado."
+
+      - name: Preparar o Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 20
+
+      - name: Verificar links e imagens
+        run: node scripts/verificar-links.mjs index.html
+
+  ci-aprovado:
+    name: ci-aprovado
+    if: always()
+    needs:
+      - verificar-index
+      - linter
+      - validacoes
+    runs-on: ubuntu-latest
+    steps:
+      - name: Conferir o resultado de todas as etapas
+        env:
+          RESULTADOS: ${{ join(needs.*.result, ' ') }}
+        run: |
+          echo "Resultados: $RESULTADOS"
+          for resultado in $RESULTADOS; do
+            if [ "$resultado" != "success" ]; then
+              echo "::error::Uma ou mais etapas do CI falharam. O merge na main está bloqueado."
+              exit 1
+            fi
+          done
+          echo "Todas as etapas passaram. Código apto para produção."

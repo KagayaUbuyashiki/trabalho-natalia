@@ -1,0 +1,16 @@
+{
+  "name": "portfolio-matheus-sa",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Portfólio profissional de Matheus Sá De Araujo Miranda com esteira de CI/CD no GitHub Actions.",
+  "scripts": {
+    "lint": "htmlhint index.html",
+    "links": "node scripts/verificar-links.mjs index.html"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "htmlhint": "1.9.1"
+  }
+}
